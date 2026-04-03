@@ -1,0 +1,4 @@
+This folder will contain all documentation for MME. 
+  
+Currently, there is the only initial drafts for the MME documentation 
+(submitted on 3/7/26) as a white paper and a language specification document.
