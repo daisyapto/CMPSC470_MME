@@ -8,8 +8,8 @@ class SymbolTable:
     def __init__(self):
         self.symbolTable = dict()
         # From tokenizer.py submission
-        self.keywords = ["solve", "simplify", "derive", "derivative", "integrate", "integral"]
-        self.helpers = ["for", "in", "the", 'expression', 'equation']
+        self.keywords = ["solve", "simplify", "derive", "derivative", "integrate", "integral", "average", "mode", "max", "min"]
+        self.helpers = ["for", "in", "the", 'expression', 'equation', 'of']
         self.variables = list(string.ascii_lowercase + string.ascii_uppercase)
         self.operators = ['=', '>', '<', '>=', '<=', '+', '-', '*', '/', '|', '^']
         self.comment = ['$', "$...", "...$"]

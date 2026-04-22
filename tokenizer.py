@@ -26,8 +26,8 @@ from collections import Counter
 
 class Tokenizer:
     def __init__(self):
-        self.keywords = ["solve", "simplify", "derive", "derivative", "integrate", "integral"]
-        self.helpers = ["for", "in", "the", 'expression', 'equation']
+        self.keywords = ["solve", "simplify", "derive", "derivative", "integrate", "integral", "average", "mode", "max", "min"]
+        self.helpers = ["for", "in", "the", 'expression', 'equation', 'of']
         self.variables = list(string.ascii_lowercase + string.ascii_uppercase)
         self.operators = ['=', '>', '<', '>=', '<=', '+', '-', '*', '/', '|', '^']
         self.comment = ['$', "$...", "...$"]
@@ -104,6 +104,7 @@ class Tokenizer:
         counts = Counter(result)
         return counts, result
 
+"""
 def main():
     tokenizer = Tokenizer()
     testPhrase = "start"
@@ -120,3 +121,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+"""
