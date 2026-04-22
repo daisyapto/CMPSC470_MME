@@ -8,7 +8,7 @@ def main():
     tokenizer = Tokenizer()
     table = SymbolTable()
     functions = Functions(table)
-    translator = Translator()
+    #translator = Translator()
 
     exit_flag = False
     while not exit_flag:
@@ -20,3 +20,6 @@ def main():
 
         if expression == "exit":
             exit_flag = True
+
+if __name__ == "__main__":
+    main()
