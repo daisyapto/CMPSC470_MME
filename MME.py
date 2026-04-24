@@ -1,7 +1,7 @@
 from tokenizer import *
 from symbolTable import SymbolTable
 from functions import *
-from tokenizer.tokenizer import Tokenizer
+from tokenizer import Tokenizer
 from translator import *
 
 def main():

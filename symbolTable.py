@@ -25,7 +25,7 @@ class SymbolTable:
         except ValueError:
             return False
 
-    def enterEntry(self, name, entryType, category, value):
+    def enterEntry(self, exp, entryType, category, value):
         # Entry format entry = {name : x, type : x, category : x, value (if applicable) : x}
         self.symbolTable[name] = {"Name" : name, "Type" : entryType, "Category" : category, "Value" : value}
 
