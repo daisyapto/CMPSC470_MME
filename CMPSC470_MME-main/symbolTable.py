@@ -25,9 +25,13 @@ class SymbolTable:
         except ValueError:
             return False
 
-    def enterEntry(self, exp, entryType, category, value):
-        # Entry format entry = {name : x, type : x, category : x, value (if applicable) : x}
-        self.symbolTable[name] = {"Name" : name, "Type" : entryType, "Category" : category, "Value" : value}
+    def enterEntry(self, name, entryType, category, value):
+        self.symbolTable[name] = {
+            "Name": name,
+            "Type": entryType,
+            "Category": category,
+            "Value": value
+        }
 
     def getEntry(self, name):
         try:
@@ -95,7 +99,9 @@ class SymbolTable:
         for test in testPrograms:
             test = test.split()
             for item in test:
-                if item.isdigit() or self.isfloat(item):
+                if item.isdigit():
+                    print(self.getEntry(int(item)))
+                elif self.isfloat(item):
                     print(self.getEntry(float(item)))
                 else:
                     print(self.getEntry(item))
