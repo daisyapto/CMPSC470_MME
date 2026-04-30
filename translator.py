@@ -8,7 +8,6 @@ class Translator:
         self.functions = Functions(table)
         self.tokenizer = Tokenizer()
 
-
     def translate(self, tokens):
         # Empty - no tokens
         if not tokens:
@@ -130,17 +129,33 @@ class Translator:
             return self.functions.minimum(nums)
         return "Error: No numbers found"
 
-    def test(self): # Crucial function for testing; simply run the "MME.py" and type "test mode" to test every function with a sample code statement in MME
+    def test(self): # Crucial function for testing; simply run the "MME.py" and type "test mode" to test every function with sample code statements in MME
         # Provides syntax guidance on how to use all the functions
         TEST_CODE = [
             "Solve for x : y = x + 1",
+            "Solve for y : x = ( y + 1 ) ^ 2",
+            "Solve for z : y = z - 3",
             "Simplify : y = x + 1 + 2",
-            "Derive for x : y = x^2 + 1",
-            "Integrate for x : y = x^2 + 1",
-            "Average : [3, 5, 7]",
-            "Mode : [3, 5, 5, 7]",
-            "Max : [3, 5, 7]",
-            "Min : [3, 5, 7]",
+            "Simplify : z = y + x + 1 + 3 + 5",
+            "Simplify : x = y + 1 + 3 + 3 + ( 5 - 3 ) ^ 2",
+            "Derive for x : y = x ^ 2 + 1",
+            "Derive for y : x = y ^ 3 + ( 2 * y ) + 1",
+            "Derive for z : y = z ^ 2 + 1",
+            "Integrate for x : y = x ^ 2 + x + 1",
+            "Integrate for y : x = y + y ^ 2 + 1",
+            "Integrate for z : y = z ^ 2 + 1",
+            "Average : [ 3 , 5 , 7 ]",
+            "Average : [ 8 , 190 , 3 , 6 , 7 , 3 , 7 , 8 ]",
+            "Average : [ 19.5 , 3.5 , 3.2 , 4.8 , 4.4 , 9.99 ]",
+            "Mode : [ 3 , 5 , 5 , 7 , 2 , 2 , 2 , 2 , 5 , 6 ]",
+            "Mode : [ 3 , 5 , 5 , 7 , 6 , 7 , 7 , 7 , 7 , 3 , 4 , 5 ]",
+            "Mode : [ 9 , 9 , 9 , 9 , 9 , 9 , 9 , 10 , 10 , 10 , 14 , 15 , 6 ]",
+            "Max : [ 3 , 5 , 5 , 7 , 2 , 2 , 2 , 2 , 5 , 6 ]",
+            "Max : [ 3 , 5 , 5 , 7 , 6 , 7 , 7 , 7 , 7 , 3 , 4 , 5 ]",
+            "Max : [ 9 , 9 , 9 , 9 , 9 , 9 , 9 , 10 , 10 , 10 , 14 , 15 , 6 ]",
+            "Min : [ 3 , 5 , 5 , 7 , 2 , 2 , 2 , 2 , 5 , 6 ]",
+            "Min : [ 3 , 5 , 5 , 7 , 6 , 7 , 7 , 7 , 7 , 3 , 4 , 5 ]",
+            "Min : [ 9 , 9 , 9 , 9 , 9 , 9 , 9 , 10 , 10 , 10 , 14 , 15 , 6 ]",
         ]
         for statement in TEST_CODE:
             tokens = self.tokenizer.tokenize(statement)
@@ -148,4 +163,4 @@ class Translator:
             print("Tokens: ", tokens)
             result = self.translate(tokens)
             print("Result: ", result)
-        print("Test model successfully completed!")
+        print("Test module successfully completed!")
