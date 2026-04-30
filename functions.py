@@ -1,28 +1,36 @@
 from symbolTable import SymbolTable
 # https://www.geeksforgeeks.org/python/python-getting-started-with-sympy-module/
 # Use the above link to build the functions for the translator
-from sympy import symbols, diff, integrate, solve, simplify, Eq
+from sympy import symbols, diff, integrate, solve, simplify, Eq, sympify
 from collections import Counter
 
 class Functions:
-    def __init__(self):
+    def __init__(self, table):
         # Unsure how to get symbol table type of token so it knows what function to call
         # Need to find a way in symbol table where tokens[0] is accessed,
         # value is returned, and thus the word ("Solve", or "Avg") is found as the token
         # and it knows to call which function from Functions class
-        self.symbolTable = SymbolTable()
+        self.symbolTable = table
 
     # Need to make this work with tokenizer, possibly remerging into cohesive string, or change tokenizer to split by ":" to extract equation as 1 string
-    def form(self, eq, sym=None): # This function is essential bc it can convert the string (i.e. 'x') to type symbols(x) and same for the equation string (i.e. 'y = x + 1') into type equation(eq)
-        eqSplit = eq.split(" = ") # this will split "y = x + 1" into ["y", "x+1"] which is the type of input needed for Eq(input1, input2) --> input1 = input2
-        if sym is None:
-            sym = symbols(eqSplit[0])
+    def form(self, eq, sym=None):
+        # Split equation string into left-hand side and right-hand side
+        left, right = eq.split("=")
+
+        # Remove any extra spaces
+        left = left.strip()
+        right = right.strip()
+
+        lhs = symbols(left) # Convert left side into a symbolic variable
+        rhs = sympify(right) # Convert right side string into a SymPy expression
+
+        equation = Eq(lhs, rhs)
+        if sym:
+            sym_var = symbols(sym) # Convert string variable (e.g., "x") into a SymPy symbol
+            return equation, sym_var
         else:
-            syms = symbols(f'{sym}, {eqSplit[0]}')
-
-        equation = Eq(syms[1], eqSplit[1])
-
-        return equation, symbols
+            # If no variable is specified, default to using the LHS variable
+            return equation, lhs
 
     def average(self, vals): # vals must be past the : --> for example, access this list token "Avg: [3, 5, 7]"
         return sum(vals) / len(vals)
@@ -42,21 +50,21 @@ class Functions:
         return solve(equation, syms)
 
     def simplify(self, equation):
-        equation, syms = self.form(equation)
-        return simplify(equation)
+        eq, _ = self.form(equation)
+        return simplify(eq.rhs)
 
     def derive(self, equation, sym):
-        equation, syms = self.form(equation, sym)
-        return diff(equation, syms)
+        eq, sym_var = self.form(equation, sym)
+        return diff(eq.rhs, sym_var)
 
     def integrate(self, equation, sym):
-        equation, syms = self.form(equation, sym)
-        return integrate(equation, syms)
+        eq, sym_var = self.form(equation, sym)
+        return integrate(eq.rhs, sym_var)
 
 # Sample testing
-funcs = Functions()
-equationText = 'y = x + 1'
-symbolText = 'x'
-
-print(funcs.derive(equationText, symbolText))
+# funcs = Functions()
+# equationText = 'y = x + 1'
+# symbolText = 'x'
+#
+# print(funcs.derive(equationText, symbolText))
 # Unsure how to debug, how to replace string "x" with type symbol x

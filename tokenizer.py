@@ -46,61 +46,67 @@ class Tokenizer:
         else:
             return False
 
-    def isFloat(self, literal):
-        if type(literal) == float:
+    def isFloat(self, token):
+        try:
+            float(token)
             return True
-        else:
+        except:
             return False
 
     def tokenize(self, phrase):
-        tokens = phrase.split()
-        """ Tested, chose to split by spaces instead so that operators can be identified
-        if ":" in phrase:
-            tokens = phrase.split(":")
-        else:
-            return "Error: Invalid phrase format, lacking ':' seperator"
-        if tokens[0].split()[0] in self.keywords:
-            if '=' in tokens[1]:
-                tokens[1] = tokens[1].split('=')
-            elif '>' in tokens[1]:
-                tokens[1] = tokens[1].split('>')
-            elif '<' in tokens[1]:
-                tokens[1] = tokens[1].split('<')
-            elif '<=' in tokens[1]:
-                tokens[1] = tokens[1].split('<=')
-            elif '>=' in tokens[1]:
-                tokens[1] = tokens[1].split('>=')
-            else:
-                return "Error: Invalid expression/equation, no operator"
-        else:
-            return "Error: Invalid keyword/keyphrase"
-        """
-        return tokens
+        # Protect multi-character operators
+        phrase = phrase.replace(">=", " __GE__ ")
+        phrase = phrase.replace("<=", " __LE__ ")
+
+        # Single-char operators
+        for op in ['=', '>', '<', '+', '-', '*', '/', '|', '^']:
+            phrase = phrase.replace(op, f" {op} ")
+
+        # Restore multi-character operators
+        phrase = phrase.replace("__GE__", ">=")
+        phrase = phrase.replace("__LE__", "<=")
+
+        # Separators
+        for s in self.sep:
+            phrase = phrase.replace(s, f" {s} ")
+
+        # Parentheses
+        for p in ['(', ')', '{', '}', '[', ']']:
+            phrase = phrase.replace(p, f" {p} ")
+
+        phrase = " ".join(phrase.split())
+        return phrase.split(" ")
 
     def identify(self, tokens):
         result = []
+
         for token in tokens:
-            if (result.count("Comment") % 2) == 0:
-                if token.lower() in self.helpers:
-                    result.append("Helper")
-                if token.lower() in self.keywords:
-                    result.append("Keyword")
-                if token.lower() in self.variables:
-                    result.append("Variable")
-                if token.lower() in self.operators:
-                    result.append("Operator")
-                if token.lower() in self.sep:
-                    result.append("Separator")
-                if token.isnumeric():
-                    result.append("Number")
-            if token in self.comment:
-                if token == "$":
-                    result.append("Comment")
-                    break
-                if token == "$..." or token == "...$":
-                    result.append("Comment")
-            if token == "\n":
-                self.lines += 1
+            token_lower = token.lower()
+
+            if token_lower in self.helpers:
+                result.append("Helper")
+
+            elif token_lower in self.keywords:
+                result.append("Keyword")
+
+            elif token in self.variables:
+                result.append("Variable")
+
+            elif token in self.operators:
+                result.append("Operator")
+
+            elif token in self.sep:
+                result.append("Separator")
+
+            elif token.isdigit():
+                result.append("Number")
+
+            elif self.isFloat(token):
+                result.append("Float")
+
+            else:
+                result.append("Unknown")
+
         counts = Counter(result)
         return counts, result
 

@@ -4,11 +4,13 @@
 
 import string
 
+
 class SymbolTable:
     def __init__(self):
         self.symbolTable = dict()
         # From tokenizer.py submission
-        self.keywords = ["solve", "simplify", "derive", "derivative", "integrate", "integral", "average", "mode", "max", "min"]
+        self.keywords = ["solve", "simplify", "derive", "derivative", "integrate", "integral", "average", "mode", "max",
+                         "min"]
         self.helpers = ["for", "in", "the", 'expression', 'equation', 'of']
         self.variables = list(string.ascii_lowercase + string.ascii_uppercase)
         self.operators = ['=', '>', '<', '>=', '<=', '+', '-', '*', '/', '|', '^']
@@ -25,9 +27,13 @@ class SymbolTable:
         except ValueError:
             return False
 
-    def enterEntry(self, exp, entryType, category, value):
-        # Entry format entry = {name : x, type : x, category : x, value (if applicable) : x}
-        self.symbolTable[name] = {"Name" : name, "Type" : entryType, "Category" : category, "Value" : value}
+    def enterEntry(self, name, entryType, category, value):
+        self.symbolTable[name] = {
+            "Name": name,
+            "Type": entryType,
+            "Category": category,
+            "Value": value
+        }
 
     def getEntry(self, name):
         try:
@@ -37,7 +43,7 @@ class SymbolTable:
 
     def editEntry(self, name, newName, newEntryType, newCategory, newValue):
         try:
-            self.symbolTable[name] = {"Name" : newName, "Type" : newEntryType, "Category" : newCategory, "Value" : newValue}
+            self.symbolTable[name] = {"Name": newName, "Type": newEntryType, "Category": newCategory, "Value": newValue}
         except KeyError:
             return f"Error: attempted to edit an invalid entry '{name}'"
 
@@ -95,7 +101,9 @@ class SymbolTable:
         for test in testPrograms:
             test = test.split()
             for item in test:
-                if item.isdigit() or self.isfloat(item):
+                if item.isdigit():
+                    print(self.getEntry(int(item)))
+                elif self.isfloat(item):
                     print(self.getEntry(float(item)))
                 else:
                     print(self.getEntry(item))
@@ -109,9 +117,10 @@ class SymbolTable:
             test = test.split()
             for item in test:
                 count += 1
-                self.editEntry(item, f"new_Name_Test_{count}", f"new_Entry_Type_Test_{count}", f"new_Category_Test_{count}", f"new_Value_Test_{count}")
+                self.editEntry(item, f"new_Name_Test_{count}", f"new_Entry_Type_Test_{count}",
+                               f"new_Category_Test_{count}", f"new_Value_Test_{count}")
                 print(self.getEntry(item))
-                
+
         print("Current Symbol Table: ", self.symbolTable)
         print("All entries successfully edited from symbol table!")
         print()
@@ -127,6 +136,7 @@ class SymbolTable:
         print("All entries successfully deleted from symbol table!")
         print()
 
+
 def main():
     symbolTable = SymbolTable()
 
@@ -136,6 +146,7 @@ def main():
 
     tests = [testProgram1, testProgram2, testProgram3]
     symbolTable.testSymbolTable(tests)
+
 
 if __name__ == "__main__":
     main()
