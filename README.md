@@ -9,7 +9,7 @@
 
 ## Documentation
 - Documentation folder --> Tutorial_and_Reference.pdf (shows how to download MME, use the language, sample code statements to run, and a reference on the main functions of MME)
-- Documentation folder --> FinalReport.pdf (not added yet, sections include language's: whitepaper, specification document, tutorial, reference manual, project development plan, evolution, translator architecture, componenet developers, development environment and runtime, test plan, and conclusion/future works)
+- Documentation folder --> MME_FinalReport.pdf (sections include required deliverables --> MME language's: whitepaper, specification document, tutorial, reference manual, project development plan, evolution, translator architecture, componenet developers, development environment and runtime, test plan, and conclusion/future works)
 
 ## To utilize MME:
 1. Download this repo's main branch
